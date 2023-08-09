@@ -26,7 +26,7 @@ cursor.execute(f'UPDATE users SET username="{username}", password="{password}" W
 This is vulnerable to SQL injection, since user input is sent together with the query without any type of sanitation. Contrary to what we saw previously, this line utilizes Python 3 `f-strings` to send the SQL query, instead of giving them separately as parameters.
 From now on, we must ask ourselves how to reach this point in the code. 
 But first, it's important for us to understand the web application. Those `@app.route('/login', methods=['POST'])` lines are very important, since they indicate how we are able to access them. If, for instance, the URL was `example.com`, we would be able to visit the `/login` route by using a `POST` request. 
-Therefore, by looking that those `@app.route` lines, we see that the server contains:
+Therefore, by looking that those `@app.route` lines, we see that the server contains the following API endpoints:
 - `/`
 - `/signup`
 - `/login`
@@ -158,7 +158,7 @@ This way, we are able to login as `username="user1"&password="password"`, like w
 
 ![](Images/Pasted%20image%2020230809182051.png?raw=true)
 
-Another way, wrapping everything is just double-quotes, would be to hijack a user (in this case of `id=1`) and change it so that we are able to login with new credentials and `sus=1`. In this case, the query is:
+Another way, wrapping everything is just double-quotes (which in some cases would be best), would be to hijack a user (in this case of `id=1`) and change it so that we are able to login with new credentials and `sus=1`. In this case, the query is:
 ```
 UPDATE users SET username="",password='',sus=1 WHERE id=1 -- -"", password="'password'" WHERE username="",password='',sus=1 WHERE id=1 -- -""
 ```
@@ -183,4 +183,4 @@ Now we simply have to do to exact same steps on the live web application, and su
 
 ## Acknowledgement
   
-Hats off to the LITCTF team! Your dedication was something that I found very distinctive and that shone not only through the active and caring Discord engagement but also in the design of the CTF itself. The wide range of challenges catered to participants of all levels, which I found very considerative. Well done and I'm definitely looking forward to next year's edition!
+Kudos to the LITCTF team! The climate of the discord server and the challenges suited for users of every level is something to be appreciated. Well done and I'm definitely looking forward to next year's edition!
