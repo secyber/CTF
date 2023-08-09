@@ -42,7 +42,7 @@ Let's start by signing-up to the application. As we saw previously, we are going
 
 We are able to see the requests we make if we open `http://192.168.1.10:2000` in our browser.
 
-![](Images/Pasted%20image%220230809172241.png?raw=true)
+![](Images/Pasted%20image%2020230809172241.png?raw=true)
 
 As we saw previously, by going to `/signup` we are presented with the following message:
 
