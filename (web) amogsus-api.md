@@ -1,11 +1,14 @@
 # (web) amogsus-api
+
 ## Introduction
 This is an beginner/intermediate level SQL Injection challenge that required the participant to know well how to manuever SQL queries and to understand how they're formed, as well as the interaction between the web application and the SQL database.
 It's a challenge which has two major ways of being solved: 
 - By using triple quotes during the SQL injection phase
-- By hijacking an existing account using the user ID
+- By hijacking an existing account using the user ID during the SQL injection phase
 
-## Discovering
+https://ctftime.org/event/2052
+
+## Guessing the type of vulnerability
 Opening the `.zip` archive we were given, we are able to see three files: `main.py`, `database.db` and the `flag.txt` file. We shall start by looking at `main.py`, which will indicate to us how the web server works.
 Opening the `main.py` file, we see that there's plenty imports. We know we are faced with a `flask` application that utilizes `SQL`. This indicates that the challenge might involve some type of SQL injection attack. We have the confirmation of this on these lines of code:
 ```python
