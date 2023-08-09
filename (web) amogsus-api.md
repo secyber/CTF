@@ -139,7 +139,7 @@ At this point, we realize that the application doesn't unquote the values we hav
 
 If we don't realize this, we are going to have a problem injecting SQL. From now on, one could have two approaches:
 - Hijack a record using the id and change the username, password and sus
-- Using triple-quotes (since using `username="user1"` wont work: this query is referring to a user stored as `user1` in the database, not `"user1"`)
+- Using triple-quotes (since using `username=""user1""` wont work: it's not a valid SQL query)
 
 
 By looking at the query again, we verify that we are able to control everything that comes after `UPDATE users SET username="`. We will comment out the rest using `-- -`
