@@ -74,7 +74,7 @@ Our final request to signup should look similar to this:
 
 ![](Images/Pasted%20image%2020230809173446.png?raw=true)
 
-If we hit send, we're going to receive a `200 OK` message with `JSON` data telling us that the User was created and that we can now login. What I recommend at this stage is to send the request to Repeater once again, so that we have two tabs, which permits us to signup, login, and so on, much faster.
+If we hit send, we're going to receive a `200 OK` message with `JSON` data telling us that the User was created and that we can now login. What I recommend at this stage is to send the request to Repeater every API endpoint, which permits us to signup, login, and so on, much faster, which is something especially good for trial-and-error.
 
 ![](Images/Pasted%20image%2020230809173640.png?raw=true)
 
