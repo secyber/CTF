@@ -141,6 +141,8 @@ If we don't realize this, we are going to have a problem injecting SQL. From now
 - Hijack a record using the id and change the username, password and sus
 - Using triple-quotes (since using `username="user1"` wont work: this query is referring to a user stored as `user1` in the database, not `"user1"`)
 
+By looking at the query again, we are able to control everything that comes after `UPDATE users SET username="`. We will comment out the rest using `-- -`
+
 ## Using triple-quotes
 
 ![](Images/Pasted%20image%2020230809181349.png?raw=true)
