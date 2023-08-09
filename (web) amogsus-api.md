@@ -35,7 +35,7 @@ Our browser utilizes `GET` requests if we visit it using the search bar. To chan
 ## Getting to the vulnerable route
 Let's start by signing-up to the application. As we saw previously, we are going to send a POST request to the application. If this is not something you are very familiar with, it might the best for you to execute `main.py` (don't forget to install the dependencies and to change the port so it doesn't conflict with the default `8080` port in burp) and try to exploit it locally first before moving to the actual server. For educational purposes, this is the approach I will use on this article. I use PyCharm Community as my IDE of preference.
 
-![[Pasted image 20230809172105.png]]
+[[Pasted image 20230809172105.png]]
 
 We are able to see the requests we make if we open `http://192.168.1.10:2000` in our browser.
 
