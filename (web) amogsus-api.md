@@ -153,7 +153,7 @@ Remember that since the values are unquoted, the first `"` will also be present 
 ```
 UPDATE users SET username="""user1""",password="password",sus=1 WHERE username="""user1"""-- -"", password=""password"" WHERE username=""user1""
 ```
-This way, we are able to login as `username="user1"&password="password"`, like we did at the start.
+This way, we are able to login as `username="user1"&password="password"`, like we did at the start. Another good detail about this injection is that the closing `username=` `"` is also commented out.
 ## Using the ID
 
 ![](Images/Pasted%20image%2020230809182051.png?raw=true)
