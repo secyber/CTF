@@ -158,7 +158,9 @@ This way, we are able to login as `username="user1"&password="password"`, like w
 
 ![](Images/Pasted%20image%2020230809182051.png?raw=true)
 
-Another way, wrapping everything is just double-quotes (which in some cases would be best), would be to hijack a user (in this case of `id=1`) and change it so that we are able to login with new credentials and `sus=1`. In this case, the query is:
+## Using the ID
+
+Another way, wrapping everything in just double-quotes (which in some cases would be best), would be to hijack a user (in this case of `id=1`) and change it so that we are able to login with new credentials and `sus=1`. In this case, the query is:
 ```
 UPDATE users SET username="",password='',sus=1 WHERE id=1 -- -"", password="'password'" WHERE username="",password='',sus=1 WHERE id=1 -- -""
 ```
