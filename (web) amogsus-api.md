@@ -43,11 +43,11 @@ We are able to see the requests we make if we open `http://192.168.1.10:2000` in
 
 As we saw previously, by going to `/signup` we are presented with the following message:
 
-![](Pasted%20image%2020230809172357.png)
+![](Images/Pasted%20image%2020230809172357.png?raw=true)
 
 Therefore, we are going to capture this request with our Burp proxy and change it to the method the application requires and send it to Repeater so that we can ditch the browser. 
 
-![](Pasted%20image%2020230809172546.png)
+![](Images/Pasted%20image%2020230809172546.png?raw=true)
 
 Looking at the code, we see the following:
 ```python
@@ -59,10 +59,10 @@ password = data['password']
 
 This means we have to provide the application with the parameters username and password as form data. As such, when altering the request, we must not forget to include the following in our header: 
 
-![](Pasted%20image%2020230809172948.png)
+![](Images/Pasted%20image%2020230809172948.png?raw=true)
 
 Otherwise, if we send form data (below),
-![](Pasted%20image%2020230809173011.png)
+![](Images/Pasted%20image%2020230809173011.png?raw=true)
 
 We will receive a `500 Internal Server Error` response. By looking at what the server printed (on our side), it has outputted 
 ```python
@@ -70,13 +70,13 @@ werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) 
 ```
 Which makes since, since we did not provide what `Content-Type` the `POST` data we are sending is.
 Our final request to signup should look similar to this:
-![](Pasted%20image%2020230809173446.png)
+![](Images/Pasted%20image%2020230809173446.png?raw=true)
 
 If we hit send, we're going to receive a `200 OK` message with `JSON` data telling us that the User was created and that we can now login. What I recommend at this stage is to send the request to Repeater once again, so that we have two tabs, which permits us to signup, login, and so on, much faster.
-![](Pasted%20image%2020230809173640.png)
+![](Images/Pasted%20image%2020230809173640.png?raw=true)
 
 Changing `POST /signup` to `POST /login`, we receive the following message
-![](Pasted%20image%2020230809174023.png)
+![](Images/Pasted%20image%2020230809174023.png?raw=true)
 
 The token is associated with our login session, and we definitely have to use it if we want to get to `/account` or `/account/update`. However, since we don't know yet how to use it, let's go back to the code.
 We see that on `/account`, the following lines refer to the token:
@@ -85,11 +85,11 @@ token = request.headers.get('Authorization', type=str)
 token = token.replace('Bearer ', '')
 ```
 The first line indicates to us that it is looking for a header named `Authorization`. Therefore, we must add to our burp request the following: 
-![](Pasted%20image%2020230809174540.png)
+![](Images/Pasted%20image%2020230809174540.png?raw=true)
 Notice that having `Bearer ` or not makes no difference, as this is something removed in the line right after. This has to do with the already defined [HTTP authentication frameworks](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication) 
 
 By requesting `/account`, the server replies with the following message:
-![](Pasted%20image%2020230809174944.png)
+![](Images/Pasted%20image%2020230809174944.png?raw=true)
 
 Since we need to be `sus` to be able to get `/flag`, this means we must alter `sus` to `1`, which is truthy (not a joke!), that is, something that evaluate to True in a boolean context. We are able to change this due to the SQL injection vulnerability over at `/account/update`.
 In order to do this, we must understand the basics of SQL injection well. Looking at the code,
@@ -125,36 +125,36 @@ cursor.execute(
 ```
 
 At this point, we realize that the application doesn't unquote the values we have sent while signing up, which is where the catch is at. We are able to confirm this if we open the `.db` file using `DB Browser`. 
-![](Pasted%20image%2020230809180303.png)
+![](Images/Pasted%20image%2020230809180303.png?raw=true)
 If we don't realize this, we are going to have a problem injecting SQL. From now on, one could have two approaches:
 - Hijack a record using the id and change the username, password and sus
 - Using triple-quotes (since using `username="user1"` wont work: this query is referring to a user stored as `user1` in the database, not `"user1"`)
 
 ## Using triple-quotes
-![](Pasted%20image%2020230809181349.png)
+![](Images/Pasted%20image%2020230809181349.png?raw=true)
 Remember that since the values are unquoted, the first `"` will also be present in the SQL query, as you can spot in the printed query that was sent by the web application:
 ```
 UPDATE users SET username="""user1""",password="password",sus=1 WHERE username="""user1"""-- -"", password=""password"" WHERE username=""user1""
 ```
 This way, we are able to login as `username="user1"&password="password"`, like we did at the start.
 ## Using the ID
-![](Pasted%20image%2020230809182051.png)
+![](Images/Pasted%20image%2020230809182051.png?raw=true)
 Another way, wrapping everything is just double-quotes, would be to hijack a user (in this case of `id=1`) and change it so that we are able to login with new credentials and `sus=1`. In this case, the query is:
 ```
 UPDATE users SET username="",password='',sus=1 WHERE id=1 -- -"", password="'password'" WHERE username="",password='',sus=1 WHERE id=1 -- -""
 ```
 And the credentials will be stored as _nothing_. 
-![](Pasted%20image%2020230809182346.png)
+![](Images/Pasted%20image%2020230809182346.png?raw=true)
 
 This way, we are able to login by providing _nothing_ to `/login`, or empty arguments.
-![](Pasted%20image%2020230809182541.png)
+![](Images/Pasted%20image%2020230809182541.png?raw=true)
 
 Response:
-![](Pasted%20image%2020230809182554.png)
+![](Images/Pasted%20image%2020230809182554.png?raw=true)
 
 ## Getting the flag
 Now that we have successfully exploited the SQL injection vulnerability, we just have to do a `GET` request to `/flag`, and retrieve it.
-![](Pasted%20image%2020230809182718.png)
+![](Images/Pasted%20image%2020230809182718.png?raw=true)
 
 Now we simply have to do to exact same steps on the live web application, and submit it on the CTF web-page.
 
