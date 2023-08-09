@@ -160,4 +160,4 @@ Now we simply have to do to exact same steps on the live web application, and su
 
 ## Acknowledgement
   
-Hats off to the LITCTF team! Your dedication shone not only through the active and caring Discord engagement but also in the design of the CTF itself. The wide range of challenges catered to participants of all levels, which I found very considerative. Well done and I'm definitely looking forward to next year's edition!
+Hats off to the LITCTF team! Your dedication was something that I found very distinctive and that shone not only through the active and caring Discord engagement but also in the design of the CTF itself. The wide range of challenges catered to participants of all levels, which I found very considerative. Well done and I'm definitely looking forward to next year's edition!
