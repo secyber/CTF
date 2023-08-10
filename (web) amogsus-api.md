@@ -141,7 +141,7 @@ If we don't realize this, we are going to have a problem injecting SQL. From now
 - Hijack a record using the id and change the username, password and sus
 - Using triple-quotes (since using `username=""user1""` wont work: it's not a valid SQL query)
 
-Those are the two main approaches I had in mind, but there's also others, such as registring another user without using quotes (`username=user&password=pass`), 
+Those are the two main approaches I had in mind, but those are not the only ones, one could, for example, register another user without using quotes (`username=user&password=pass`), but such requires more effort.
 By looking at the query again, we verify that we are able to control everything that comes after `UPDATE users SET username="`. We will comment out the rest using `-- -`
 
 
@@ -151,9 +151,9 @@ By looking at the query again, we verify that we are able to control everything 
 
 Remember that since the values are unquoted, the first `"` will also be present in the SQL query, as you can spot in the printed query that was sent by the web application:
 ```
-UPDATE users SET username="""user1""",password="""password""",sus=1 WHERE username="""user1"""-- -"", password=""password"" WHERE username=""user1""
+UPDATE users SET username="""user1""",password="password",sus=1 WHERE username="""user1"""-- -"", password=""password"" WHERE username=""user1""
 ```
-This way, we are able to login as `username="user1"&password="password"`, like we did at the start. Another good detail about this injection is that the closing `username=` `"` is also commented out.
+This way, we are able to login as `username="user1"&password=password`, like we did at the start. Another good detail about this injection is that the closing `username=` `"` is also commented out.
 ## Using the ID
 
 ![](Images/Pasted%20image%2020230809182051.png?raw=true)
